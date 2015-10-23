@@ -20,6 +20,8 @@
 
 @optional
 + (Class <WAAppRouterParametersProtocol>)appLinkParametersClass;
++ (UIViewController *)viewControllerForRouteHandler;
+
 - (void)waappRoutingDidDisplayController:(UIViewController *)controller withAppLink:(WAAppLink *)appLink;
 
 @end

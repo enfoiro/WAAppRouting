@@ -330,8 +330,8 @@
                                                                  animated:animated];
             }
         else {
-            // Allocate the controller
-            controllerToReturn = [[targetViewControllerClass alloc] init];
+            controllerToReturn = [self viewControllerForClass:targetViewControllerClass];
+
             // Allocate a navigation controller
             UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:(UIViewController *)controllerToReturn];
             // Present
@@ -347,7 +347,7 @@
     }
     else {
         // Based on the assumption we made on the call stack, we do not have a navigation controller. So let's allocate it and see if there is any container gentle enough to embrass it
-        controllerToReturn = [[targetViewControllerClass alloc] init];
+        controllerToReturn = [self viewControllerForClass:targetViewControllerClass];
     }
     
     return controllerToReturn;
@@ -361,7 +361,8 @@
     UIViewController *controllerToReturn = (UIViewController *)[navigationController waapp_popToFirstControllerOfClass:targetViewControllerClass animated:animated];
     // Not found? Then allocate it
     if (!controllerToReturn) {
-        controllerToReturn = [[targetViewControllerClass alloc] init];
+        controllerToReturn = [self viewControllerForClass:targetViewControllerClass];
+
         [navigationController pushViewController:controllerToReturn animated:animated];
     }
     
@@ -380,6 +381,19 @@
     }
     
     return controllerFound;
+}
+
+- (UIViewController *)viewControllerForClass:(Class)controllerClass {
+    UIViewController *controllerToReturn = nil;
+
+    // Ask the controller to instantiate itself or allocate it
+    if ([(id<WAAppRouterTargetControllerProtocol>)controllerClass respondsToSelector:@selector(viewControllerForRouteHandler)]) {
+        controllerToReturn = [(id<WAAppRouterTargetControllerProtocol>)controllerClass viewControllerForRouteHandler];
+    } else {
+        controllerToReturn = [[controllerClass alloc] init];
+    }
+
+    return controllerToReturn;
 }
 
 - (BOOL) handleContainerForPresentingController:(UIViewController *)presentingController childController:(UIViewController *)childController animated:(BOOL)animated {
