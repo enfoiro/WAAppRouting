@@ -21,6 +21,7 @@
 @optional
 + (Class <WAAppRouterParametersProtocol>)appLinkParametersClass;
 + (UIViewController *)viewControllerForRouteHandler;
++ (BOOL)requiresAuthentication;
 
 - (void)waappRoutingDidDisplayController:(UIViewController *)controller withAppLink:(WAAppLink *)appLink;
 
