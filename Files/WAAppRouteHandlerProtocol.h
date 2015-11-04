@@ -17,7 +17,7 @@
  *
  *  @return YES if we should continue, NO otherwise
  */
-typedef BOOL (^WAAppRouteHandlerShouldHandleAppLinkForRouteEntityBlock)(WAAppRouteEntity *routeEntity);
+typedef BOOL (^WAAppRouteHandlerShouldHandleAppLinkForRouteEntityBlock)(WAAppRouteEntity *routeEntity, WAAppLink *appLink);
 
 /**
  *  A block used to preconfigured the controller we are trying to place in the stack. This block is called everytime before reloading the controller with the app link

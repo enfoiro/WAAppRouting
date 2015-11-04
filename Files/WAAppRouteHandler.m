@@ -50,7 +50,7 @@
     
     // Check if the entity should be discarded or not
     if ([self respondsToSelector:@selector(shouldHandleAppLinkBlock)] && self.shouldHandleAppLinkBlock) {
-        BOOL shouldHandle = self.shouldHandleAppLinkBlock(routeEntity);
+        BOOL shouldHandle = self.shouldHandleAppLinkBlock(routeEntity, appLink);
         if (!shouldHandle) {
             return NO;
         }
